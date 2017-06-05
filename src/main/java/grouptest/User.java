@@ -3,7 +3,7 @@ package grouptest;
 /**
  * Created by Thomas Ecalle on 26/05/2017.
  */
-public class User
+public final class User
 {
     private long id;
     private String pseudo;

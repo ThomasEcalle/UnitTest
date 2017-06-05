@@ -8,7 +8,7 @@ import java.sql.Statement;
 /**
  * Created by Thomas Ecalle on 26/05/2017.
  */
-public class DatabaseManager
+public final class DatabaseManager
 {
     private static Connection connection;
     public static final String URL_DATABASE = "jdbc:mysql://localhost/unit_test_database";
@@ -40,6 +40,5 @@ public class DatabaseManager
         Statement statement = getConnection().createStatement();
 
         statement.executeUpdate(query);
-
     }
 }

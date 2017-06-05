@@ -49,9 +49,7 @@ public final class UserDatabaseService implements ResetPasswordService
 
         final ResultSet resultSet = preparedStatement.executeQuery();
 
-
         //Create User
-
         final User.Builder builder = new User.Builder();
 
         User user = null;
@@ -59,7 +57,6 @@ public final class UserDatabaseService implements ResetPasswordService
 
         if (resultSet.next())
         {
-
             builder.id(resultSet.getLong(1));
             builder.pseudo(resultSet.getString(2));
             builder.password(resultSet.getString(3));
@@ -72,6 +69,7 @@ public final class UserDatabaseService implements ResetPasswordService
             final String wtf = "azertyuiopqsdfghjklmnbvcxw1234578963*$^ù**^^$*";
             StringBuilder stringBuilder = new StringBuilder();
 
+            //Building a random new Password
             final Random random = new Random();
 
             for (int index = 0; index < 6; index++)
