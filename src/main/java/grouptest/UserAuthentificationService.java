@@ -38,10 +38,5 @@ public class UserAuthentificationService implements IAuthentificationService{
         return user;
     }
 
-    public static void main(String[] args) throws SQLException
-    {
-        UserAuthentificationService userAuthentificationService = new UserAuthentificationService();
-        User user = userAuthentificationService.connectUser("toto", "tataa");
-        System.out.println( user);
-    }
+
 }
