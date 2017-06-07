@@ -13,7 +13,7 @@ public final class DatabaseManager
     private static Connection connection;
     public static final String URL_DATABASE = "jdbc:mysql://localhost/unit_test_database";
     public static final String USER_DATABASE = "root";
-    public static final String PASSWORD_DATABASE = "pocebleu";
+    public static final String PASSWORD_DATABASE = "";
 //    public static final String PASSWORD_DATABASE = "";
 
     public static Connection getConnection()
