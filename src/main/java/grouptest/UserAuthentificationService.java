@@ -35,8 +35,6 @@ public class UserAuthentificationService implements IAuthentificationService{
                         .password(resultSet.getString("password"))
                         .build();
         }
-
-
         return user;
     }
 
