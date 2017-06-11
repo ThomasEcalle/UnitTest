@@ -7,6 +7,6 @@ import java.sql.SQLException;
  */
 public interface IUserInscription {
     // return an int depending of the failures or the success (success = 0)
-    int insertUser(String pseudo, String password,String email) throws SQLException;
+    void insertUser(String pseudo, String password, String email) throws SQLException;
 }
 

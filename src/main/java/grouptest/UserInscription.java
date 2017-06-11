@@ -1,5 +1,8 @@
 package grouptest;
 
+import grouptest.exceptions.AlreadyExistingEmail;
+import grouptest.exceptions.AlreadyExistingPseudo;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +11,8 @@ import java.sql.SQLException;
 /**
  * Created by Paul on 08/06/2017.
  */
-public class UserInscription implements IUserInscription{
+public class UserInscription implements IUserInscription
+{
     private Connection connection;
 
     public UserInscription()
@@ -16,14 +20,8 @@ public class UserInscription implements IUserInscription{
         this.connection = DatabaseManager.getConnection();
     }
 
-    public int insertUser(String pseudo, String password, String email) throws SQLException{
-        User userToInsert = new User.Builder()
-                .pseudo(pseudo)
-                .email(email)
-                .password(password)
-                .build();
-
-        /*Gestion des Erreurs : return 1 = pseudo existant, reuturn 2 = email existant*/
+    public void insertUser(String pseudo, String password, String email) throws SQLException
+    {
 
         /*Pour le pseudo*/
         final PreparedStatement statementPseudo = connection.prepareStatement("Select * from user where pseudo = ?");
@@ -31,8 +29,9 @@ public class UserInscription implements IUserInscription{
 
         ResultSet resultSetPseudo = statementPseudo.executeQuery();
 
-        if(resultSetPseudo != null){
-            return 1;
+        if (resultSetPseudo.next())
+        {
+            throw new AlreadyExistingPseudo();
         }
 
         /*Pour le mail*/
@@ -41,16 +40,18 @@ public class UserInscription implements IUserInscription{
 
         ResultSet resultSetEmail = statementEmail.executeQuery();
 
-        if(resultSetEmail != null){
-            return 2;
+        if (resultSetEmail.next())
+        {
+            throw new AlreadyExistingEmail();
         }
 
-        /*Insertion*/
-        final PreparedStatement statementInsert = connection.prepareStatement("INSERT INTO TABLE user VALUES (pseudo = ?, password = ?, email = ?");
-        statementPseudo.setString(1, pseudo);
-        statementPseudo.setString(2, password);
-        statementPseudo.setString(3, email);
 
-        return 0;
+        /*Insertion*/
+        final PreparedStatement statementInsert = connection.prepareStatement("INSERT INTO user (pseudo, password, email) VALUES (?, ?, ?)");
+        statementInsert.setString(1, pseudo);
+        statementInsert.setString(2, password);
+        statementInsert.setString(3, email);
+
+        statementInsert.execute();
     }
 }
